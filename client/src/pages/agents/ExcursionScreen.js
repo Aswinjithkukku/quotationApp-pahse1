@@ -64,7 +64,7 @@ function ExcursionScreen() {
                 id="peopleField"
                 type="number"
                 min='0'
-                className="block p-2 w-full  text-white bg-gray-400  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
+                className="block p-2 w-full  text-white shadow-sm rounded-sm  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
                 value={people}
                 onChange={(e) => setPeople(e.target.value)}
               />
@@ -79,7 +79,7 @@ function ExcursionScreen() {
               </label>
               <select
                 id="excursionsField"
-                className="block p-2 w-full  text-white bg-gray-400  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
+                className="block p-2 w-full  text-white shadow-sm rounded-sm  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
                 value={excursion}
                 onChange={(e) => setExcursion(e.target.value)}
               >

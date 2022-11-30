@@ -7,7 +7,7 @@ import { BsCashCoin } from "react-icons/bs";
 function ExcursionResultScreen({ array }) {
   return (
     <Fragment>
-      <div className="mt-10 p-5 bg-boxColor text-darkColor">
+      <div className="mt-10 p-5 bg-white text-darkColor">
         <div className="">
           {array.map((item) => (
 

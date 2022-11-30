@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import HotelResultScreen from "./HotelResultScreen";
 import axios from '../../axios'
 import { useDispatch, useSelector } from 'react-redux' 
-import { getPrice, addNewRow, handleRowItemChange } from '../../redux/slices/hotelSlice'
+import { getPrice, addNewRow, handleRowItemChange,removeRow } from '../../redux/slices/hotelSlice'
+import { CgClose } from "react-icons/cg";
 
 function HotelEnquiryScreen() {
   const dispatch = useDispatch()
@@ -27,23 +28,23 @@ function HotelEnquiryScreen() {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const addPrice = (item) => {
-    setArray([...array, item])
-    // alert('added successfully')
+  // const addPrice = (item) => {
+  //   setArray([...array, item])
+  //   // alert('added successfully')
 
-    fetchData()
-  }
+  //   fetchData()
+  // }
   
 
   const fetchData = async() => {
     try {
       const { data } = await axios.post('/hotel/getPrice',{array, people, nights,hotelName, placeName})
       console.log(data);
-      const payload = {
-        array: array,
-        price: data
-      }
-      dispatch(getPrice(payload))
+      // const payload = {
+      //   array: array,
+      //   price: data
+      // }
+      // dispatch(getPrice(payload))
     } catch (error) {
       console.log(error);
     }
@@ -52,14 +53,14 @@ function HotelEnquiryScreen() {
   const submitHandler = (e) => {
     e.preventDefault()
 
-    let item = {
-      index: (new Date).getTime(),
-      roomType,
-      count,
-      price
-    }
+    // let item = {
+    //   index: (new Date).getTime(),
+    //   roomType,
+    //   count,
+    //   price
+    // }
 
-    addPrice(item)
+    // addPrice(item)
   }
 
   const onRowChange = (e, index) => {
@@ -72,15 +73,15 @@ function HotelEnquiryScreen() {
 
   return (
     <div>
-      <div className="max-w-screen-2xl mx-auto shadow-xl">
-        <div className="mt-20  border-2 bg-tertiaryColor py-10 px-5">
+      <div className="max-w-screen-2xl mx-auto ">
+        <div className="mt-20  border-2 bg-white shadow-md py-10 px-5">
 
           <form onSubmit={submitHandler}>
             <div className="grid grid-cols-4 gap-10">
               <div className="mb-4">
                 <label
                   htmlFor="retuenField"
-                  className="text-lg font-bold text-white"
+                  className="text-lg font-semibold text-darkColor"
                 >
                   Number of person
                 </label>
@@ -91,14 +92,14 @@ function HotelEnquiryScreen() {
                   value={data.people}
                   onChange={onChange}
                   min='0'
-                  className="block p-2 w-full  text-white bg-gray-400  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
+                  className="block p-2 w-full  text-darkColor bg-white shadow-sm rounded-sm  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
 
               <div className="mb-4">
                 <label
                   htmlFor="hotelsField"
-                  className="text-lg font-bold text-white"
+                  className="text-lg font-semibold text-darkColor"
                 >
                   Hotels
                 </label>
@@ -108,14 +109,14 @@ function HotelEnquiryScreen() {
                   name="hotelName"
                   value={data.hotelName}
                   onChange={onChange}
-                  className="block p-2 w-full text-white bg-gray-400  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-white"
+                  className="block p-2 w-full text-darkColor bg-white shadow-sm rounded-sm  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-white"
                 />
               </div>
 
               <div className="mb-4">
                 <label
                   htmlFor="hotelsField"
-                  className="text-lg font-bold text-white"
+                  className="text-lg font-semibold text-darkColor"
                 >
                   Place
                 </label>
@@ -125,14 +126,14 @@ function HotelEnquiryScreen() {
                   name='placeName'
                   value={data.placeName}
                   onChange={onChange}
-                  className="block p-2 w-full text-white bg-gray-400  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-white"
+                  className="block p-2 w-full text-darkColor bg-white shadow-sm rounded-sm  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-white"
                 />
               </div>
 
               <div className="mb-4">
                 <label
                   htmlFor="hotelsField"
-                  className="text-lg font-bold text-white"
+                  className="text-lg font-semibold text-darkColor"
                 >
                   Nights
                 </label>
@@ -143,17 +144,17 @@ function HotelEnquiryScreen() {
                   min='0'
                   value={data.nights}
                   onChange={onChange}
-                  className="block p-2 w-full text-white bg-gray-400  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-white"
+                  className="block p-2 w-full text-darkColor bg-white shadow-sm rounded-sm  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-white"
                 />
               </div>
               </div>
               {rows.map((row,index) => (
                 <>
-                <div className="grid grid-cols-3 gap-5" key={index}>
-              <div className="mb-4">
+                <div className="grid grid-cols-12 gap-5" key={index}>
+              <div className="mb-4 col-span-4">
                 <label
                   htmlFor="bedroomsField"
-                  className="text-lg font-bold text-white"
+                  className="text-lg font-semibold text-darkColor"
                 >
                   RoomType
                 </label>
@@ -163,8 +164,9 @@ function HotelEnquiryScreen() {
                   name="roomType"
                   value={row.roomType}
                   onChange={(e) => onRowChange(e,index)}
-                  className="block p-2 w-full text-white bg-gray-400  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-white"
+                  className="block p-2 w-full text-darkColor bg-white shadow-sm rounded-sm  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-white"
                 >
+                  <option value='' >choose Room Type</option>
                   <option name='oneBr' value='oneBr'>One BedRoom</option>
                   <option name='twoBr' value='twoBr'>Two BedRoom</option>
                   <option name='threeBr' value='threeBr'>Three BedRoom</option>
@@ -173,10 +175,10 @@ function HotelEnquiryScreen() {
                 </select>
               </div>
 
-              <div className="mb-4">
+              <div className="mb-4 col-span-4">
                 <label
                   htmlFor="bedroomsField"
-                  className="text-lg font-bold text-white"
+                  className="text-lg font-semibold text-darkColor"
                 >
                   Count
                 </label>
@@ -187,14 +189,14 @@ function HotelEnquiryScreen() {
                   min='0'
                   value={row.count}
                   onChange={(e) => onRowChange(e,index)}
-                  className="block p-2 w-full text-white bg-gray-400  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-white"
+                  className="block p-2 w-full text-darkColor bg-white shadow-sm rounded-sm  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-600 placeholder-white"
                 />
               </div>
 
-              <div className="mb-4">
+              <div className="mb-4 col-span-3">
                 <label
                   htmlFor="bedroomsField"
-                  className="text-lg font-bold text-white"
+                  className="text-lg font-semibold text-darkColor"
                 >
                   Price
                 </label>
@@ -205,16 +207,18 @@ function HotelEnquiryScreen() {
                   min='0'
                   value={row.price}
                   onChange={(e) => onRowChange(e,index)}
-                  className="block p-2 w-full text-white bg-gray-400  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-white"
+                  className="block p-2 w-full text-darkColor bg-white shadow-sm rounded-sm  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-white"
                 />
               </div>
+              <div className=" col-span-1 flex items-center justify-center text-2xl text-red-600"
+              onClick={() => dispatch(removeRow(index))}><CgClose /> </div>
               </div>
               </>
               ))}
               <div className="flex items-center">
-                <button className=" bg-darkColor text-white font-medium px-36 py-2 rounded-lg text-center"
+                <button className=" text-blue-600 underline font-medium  rounded-lg text-center"
                   type="submit" onClick={() => dispatch(addNewRow())}>
-                  add
+                  add more fileds
                 </button>
               </div>
 

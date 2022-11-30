@@ -10,7 +10,8 @@ const initialState= {
             count: 0,
             price: 0,
         },
-    ]
+    ],
+    hotelData: {}
 }
 
 
@@ -34,7 +35,6 @@ export const hotelSlice = createSlice({
         },
         handleRowItemChange: (state, action) => {
             state.rows[action.payload.index][action.payload.name] = action.payload.value
-
         },
         removeRow: (state, action) => {
             const filteredRows = state.rows?.filter(
@@ -44,6 +44,9 @@ export const hotelSlice = createSlice({
             );
             state.rows = filteredRows;
         },
+        getHotelData: (state,action) => {
+            state.hotelData = action.payload
+        }
         // let products = productsRows?.filter((row) => {
         //     if (row?._id) {
         //         return {
@@ -61,7 +64,9 @@ export const hotelSlice = createSlice({
 export const {
     getPrice,
     addNewRow,
-    handleRowItemChange
+    handleRowItemChange,
+    removeRow,
+    getHotelData
 } = hotelSlice.actions;
 
 export default hotelSlice.reducer;

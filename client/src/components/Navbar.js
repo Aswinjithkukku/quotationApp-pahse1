@@ -11,12 +11,12 @@ function Navbar() {
     const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
     return (
-        <div className="w-[100%] flex items-center justify-between py-[16px] px-[20px] bg-primaryColor shadow-lg">
+        <div className="w-[100%] flex items-center justify-between py-[16px] px-[20px] bg-darkColor shadow-lg">
             <i className="text-darkColor text-[24px] cursor-pointer flex items-center justify-center invisible">
                 <FiMenu />
             </i>
             <div className="flex items-center">
-                <button className="relative p-0 h-auto mr-[1.5em] text-darkColor flex items-center justify-center bg-transparent hover:bg-transparent text-[20px]">
+                <button className="relative p-0 h-auto mr-[1.5em] text-primaryColor flex items-center justify-center bg-transparent hover:bg-transparent text-[20px]">
                     <BsBellFill />
                     <span className="absolute top-[-2px] right-[-2px] w-[10px] h-[10px] rounded-full bg-[#e03b24] border-2 border-white  "></span>
                 </button>

@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import TransferResultScreen from "./TransferResultScreen";
-import { getTransferEnquiryData, transferEquiryData } from "../../redux/slices/transferSlice";
+import {
+  getTransferEnquiryData,
+  transferEquiryData,
+} from "../../redux/slices/transferSlice";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../../axios";
 
 function TransferEnquiryScreen() {
   const dispatch = useDispatch();
 
-  const { places, airports , transferEnquiry } = useSelector((state) => state.transfer);
+  const { places, airports, transferEnquiry } = useSelector(
+    (state) => state.transfer
+  );
 
   const [locations, setLocations] = useState({
     people: "",
@@ -27,7 +32,6 @@ function TransferEnquiryScreen() {
     setLocations({ ...locations, [e.target.name]: e.target.value });
   };
 
-
   const transferDatas = {
     people: Number(people),
     airportCode,
@@ -44,16 +48,16 @@ function TransferEnquiryScreen() {
         transferDatas
       );
       const payload = {
-        transferEnquiry:{
+        transferEnquiry: {
           people,
           airportCode,
           placeId,
           transferStatus,
-          returnStatus
+          returnStatus,
         },
-        transferData: response.data
-      }
-      dispatch(transferEquiryData(payload))
+        transferData: response.data,
+      };
+      dispatch(transferEquiryData(payload));
     } catch (error) {
       console.log(error);
     }
@@ -61,19 +65,19 @@ function TransferEnquiryScreen() {
   return (
     <div className="max-w-screen-2xl mx-auto">
       <form onSubmit={submitHandler}>
-        <div className="mt-20 grid grid-cols-5 gap-10 border-2 bg-tertiaryColor py-10 px-5">
+        <div className="mt-20 grid grid-cols-5 gap-10 border-2 bg-white py-10 px-5 shadow-md">
           <div className="mb-4">
             <label
               htmlFor="airportField"
-              className="text-lg font-bold text-primaryColor"
+              className="text-lg font-bold text-darkColor"
             >
               Peoples
             </label>
             <input
               id="airportField"
               type="number"
-              min='0'
-              className="block p-2 w-full text-darkColor bg-primaryColor  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-darkColor"
+              min="0"
+              className="block p-2 w-full shadow-sm rounded-sm text-darkColor bg-primaryColor  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-darkColor"
               placeholder="Enter Number of People"
               name="people"
               value={locations.people}
@@ -83,13 +87,13 @@ function TransferEnquiryScreen() {
           <div className="mb-4">
             <label
               htmlFor="airportField"
-              className="text-lg font-bold text-primaryColor"
+              className="text-lg font-bold text-darkColor"
             >
               Airport
             </label>
             <select
               id="airportField"
-              className="block p-2 w-full  text-darkColor bg-primaryColor  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
+              className="block p-2 w-full shadow-sm rounded-sm text-darkColor bg-primaryColor  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter airport"
               name="airportCode"
               value={locations.airportCode}
@@ -107,13 +111,13 @@ function TransferEnquiryScreen() {
           <div className="mb-4">
             <label
               htmlFor="placeField"
-              className="text-lg font-bold text-primaryColor"
+              className="text-lg font-bold text-darkColor"
             >
               Place
             </label>
             <select
               id="placeField"
-              className="block p-2 w-full  text-darkColor bg-primaryColor  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
+              className="block p-2 w-full shadow-sm rounded-sm text-darkColor bg-primaryColor  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter place"
               name="placeId"
               value={locations.placeId}
@@ -130,13 +134,13 @@ function TransferEnquiryScreen() {
           <div className="mb-4">
             <label
               htmlFor="typeField"
-              className="text-lg font-bold text-primaryColor"
+              className="text-lg font-bold text-darkColor"
             >
               Type of Travel
             </label>
             <select
               id="typeField"
-              className="block p-2 w-full  text-darkColor bg-primaryColor  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
+              className="block p-2 w-full shadow-sm rounded-sm text-darkColor bg-primaryColor  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter type"
               name="transferStatus"
               value={locations.transferStatus}
@@ -151,7 +155,7 @@ function TransferEnquiryScreen() {
             <div className="mb-4">
               <label
                 htmlFor="retuenField"
-                className="text-lg font-bold text-primaryColor"
+                className="text-lg font-bold text-darkColor"
               >
                 Return
               </label>
@@ -166,24 +170,18 @@ function TransferEnquiryScreen() {
             </div>
             <button
               value="submit"
-              className="ml-14 bg-darkColor text-white font-medium px-3 py-2 rounded-lg"
+              className="ml-14 bg-darkColor hover:bg-zinc-600 duration-150 text-white font-medium px-3 py-2 rounded-sm"
             >
-              Search
+              Create
             </button>
           </div>
         </div>
       </form>
       <div>
-        <TransferResultScreen
-          people={people}
-          transferStatus={transferStatus}
-          returnStatus={returnStatus}
-          transferEnquiry={transferEnquiry}
-        />
+        <TransferResultScreen transferEnquiry={transferEnquiry} />
       </div>
     </div>
   );
 }
-
 
 export default TransferEnquiryScreen;

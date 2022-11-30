@@ -12,7 +12,8 @@ module.exports = {
               boxColor: "#F9DFDC",
           },
           boxShadow: {
-              sm: "0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -2px rgb(0 0 0 / 5%)",
+              sm: "12px 12px 16px 0 rgba(255, 255, 255, 0.3) inset,-8px -8px 12px 0 rgba(0, 0, 0, .25) inset",
+              md: "12px 12px 16px 0 rgba(0, 0, 0, 0.25),-8px -8px 12px 0 rgba(255, 255, 255, 0.3)"
           },
       },
   },
