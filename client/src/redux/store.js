@@ -4,6 +4,7 @@ import userReducer from "./slices/userSlices";
 import locationReducer from "./slices/locationSlice";
 import excursionReducer from "./slices/excursionSlice";
 import hotelReducer from './slices/hotelSlice'
+import quotationReducer from './slices/quotationSlice'
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     location: locationReducer,
     excursion: excursionReducer,
     hotel: hotelReducer,
+    quotation: quotationReducer
   },
   devTools: true,
 });

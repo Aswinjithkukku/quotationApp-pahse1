@@ -20,12 +20,14 @@ const hotelRouter = require("./routes/hotelRouter.js")
 const transferRouter = require("./routes/transferRouter.js")
 const excursionRouter = require("./routes/excursionRouter.js")
 const userRouter = require("./routes/userRouter.js")
+const quotationRouter = require("./routes/quotationRouter.js")
 
 app.use('/api/user', userRouter)
 app.use('/api/location', locationRouter)
 app.use('/api/hotel', hotelRouter)
 app.use('/api/transfer', transferRouter)
 app.use('/api/excursion', excursionRouter)
+app.use('/api/quotation', quotationRouter)
 
 
 module.exports = app

@@ -1,44 +1,39 @@
-const catchAsyncErrors = require('../middlewares/catchAsyncErrors.js')
+const catchAsyncErrors = require("../middlewares/catchAsyncErrors.js");
 
 // apppending hotels to the quotation directly = /api/hotel/getPrice
 exports.getHotelPrice = catchAsyncErrors(async (req, res, next) => {
-  const {
-    array,
-    nights,
-    people,
-    hotelName,
-    placeName,
+  const { filteredData, hotelData } = req.body;
 
-  } = req.body;
-
-  // array= [
+  // hotelData= 
   //   {
-  //     id: 1,
-  //     type: onbr,
-  //     count: 2,
-  //     price: 10
+  //  people(pin):"2"
+  // hotelName(pin):"arabic"
+  // placeName(pin):"malappuram"
+  // nights(pin):"2"
+  //   }
+  // filteredData= [
+  //   {
+  // roomType(pin):"twoBr"
+  // count(pin):"1"
+  // price(pin):"1000"
   //   }
   // ]
 
+  let sum = 0;
 
-  let sum = 0
-
-  array.forEach(element => {
-    sum += (element.count * element.price)
+  filteredData.forEach((element) => {
+    sum += element.count * element.price;
   });
-  
+
   console.log(sum);
 
-  const totalSum = sum * nights  
-  const sumPerPerson = totalSum / people
+  const totalSum = sum * hotelData.nights;
+  const sumPerPerson = totalSum / hotelData.people;
 
-  
   res.status(201).json({
     success: true,
     sum,
     totalSum,
     sumPerPerson,
-    hotelName,
-    placeName
   });
 });

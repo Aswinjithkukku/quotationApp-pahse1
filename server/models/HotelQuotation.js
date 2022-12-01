@@ -40,12 +40,6 @@ module.exports = (sequelize, DataTypes) => {
         set: function (roomType) {
             this.setDataValue('roomType', JSON.stringify(roomType));
         }
-        // {
-        //     index;
-        //     type;
-        //     count;
-        //     price
-        // }
       },
       nights: {
         type: DataTypes.STRING,
@@ -53,6 +47,14 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: true,
         },
+      },
+      totalamount: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      amountPerPerson: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
     });
   

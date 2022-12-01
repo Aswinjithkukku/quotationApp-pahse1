@@ -2,8 +2,6 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState= {
     loading: false,
-    array: [],
-    price: {},
     rows: [
         {
             roomType: '',
@@ -11,7 +9,9 @@ const initialState= {
             price: 0,
         },
     ],
-    hotelData: {}
+    hotelData: {},
+    filteredData: [],
+    price: {}
 }
 
 
@@ -19,11 +19,7 @@ export const hotelSlice = createSlice({
     name: "hotel",
     initialState,
     reducers: {
-        getPrice: (state, action) => {
-            state.loading = false
-            state.array = action.payload.array
-            state.price = action.payload.price
-        },
+
         addNewRow: (state, action) => {
             state.rows.push(
                 {
@@ -46,27 +42,34 @@ export const hotelSlice = createSlice({
         },
         getHotelData: (state,action) => {
             state.hotelData = action.payload
+        },
+        filteredRowsData: (state,action) => {
+            let prices = state.rows?.filter((row) => {
+                if(row?.roomType && row?.count && row?.price) {
+                    return {
+                        roomType: row?.roomType,
+                        count: row?.count,
+                        price: row?.price
+                    }
+                }
+                return '';
+            })
+            state.filteredData = prices
+        },
+        prices: (state,action) => {
+            state.price = action.payload
         }
-        // let products = productsRows?.filter((row) => {
-        //     if (row?._id) {
-        //         return {
-        //             quantity: row.quantity,
-        //             name: row?.selectedProduct?.name,
-        //             description: row?.selectedProduct?.description,
-        //             price: row?.selectedProduct?.price,
-        //         };
-        //     }
-        //     return "";
-        // });
+
     }
 })
 
 export const {
-    getPrice,
     addNewRow,
     handleRowItemChange,
     removeRow,
-    getHotelData
+    getHotelData,
+    filteredRowsData,
+    prices
 } = hotelSlice.actions;
 
 export default hotelSlice.reducer;

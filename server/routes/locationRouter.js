@@ -6,10 +6,15 @@ const {
   getPlaces,
   getAirports,
 } = require("../controllers/locationControllers");
+const {
+  isAuthenticatedUser,
+  isAgent,
+  isSuperAdmin,
+} = require("../middlewares/auth.js");
 
-router.route("/countries").get(getCountries);
-router.route("/place/create").post(createPlace);
-router.route("/places").get(getPlaces);
-router.route("/airports").get(getAirports);
+router.route("/countries").get(isAuthenticatedUser, getCountries);
+router.route("/place/create").post(isAuthenticatedUser, createPlace);
+router.route("/places").get(isAuthenticatedUser, getPlaces);
+router.route("/airports").get(isAuthenticatedUser, getAirports);
 
 module.exports = router;

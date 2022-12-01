@@ -170,9 +170,9 @@ function TransferEnquiryScreen() {
             </div>
             <button
               value="submit"
-              className="ml-14 bg-darkColor hover:bg-zinc-600 duration-150 text-white font-medium px-3 py-2 rounded-sm"
+              className="ml-14 bg-darkColor hover:bg-zinc-600 duration-150 text-white font-medium px-3 py-2 rounded-md"
             >
-              Create
+              Submit
             </button>
           </div>
         </div>

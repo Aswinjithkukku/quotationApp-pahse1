@@ -7,6 +7,7 @@ import TransferList from '../pages/superAdmin/Transfers/TransferList'
 import CreateTransfers from '../pages/superAdmin/Transfers/CreateTransfers'
 import CreateExcursions from '../pages/superAdmin/excursions/CreateExcursions'
 import ExcursionLists from '../pages/superAdmin/excursions/ExcursionLists'
+import QuotationList from '../pages/superAdmin/Quotations/QuotationList'
 
 const AdminRoutes = () => {
     return(
@@ -21,6 +22,7 @@ const AdminRoutes = () => {
                     <Route path='/transfer/create' element={<CreateTransfers/>} />
                     <Route path='/excursions' element={<ExcursionLists/>} />
                     <Route path='/excursion/create' element={<CreateExcursions/>} />
+                    <Route path='/quotations' element={<QuotationList/>} />
                 </Routes>
             </main>
         </div>

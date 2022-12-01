@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import HotelResultScreen from "./HotelResultScreen";
 import axios from '../../axios'
-import { useDispatch, useSelector } from 'react-redux' 
-import { getPrice, addNewRow, handleRowItemChange,removeRow } from '../../redux/slices/hotelSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { getHotelData, addNewRow, handleRowItemChange, removeRow, filteredRowsData, prices } from '../../redux/slices/hotelSlice'
 import { CgClose } from "react-icons/cg";
+import { useEffect } from "react";
 
 function HotelEnquiryScreen() {
   const dispatch = useDispatch()
@@ -16,52 +17,34 @@ function HotelEnquiryScreen() {
     count: '',
     price: ''
   })
-  const [array, setArray] = useState([])
-  const { people, hotelName, placeName, nights, count, price } = data
+  const { people, hotelName, placeName, nights } = data
 
-  const [ roomType, setRoomType ] = useState('')
+  const { hotelData, rows, filteredData, price } = useSelector(state => state.hotel)
 
-  const { array:hotelArray, price:hotelPrice, rows } = useSelector(state => state.hotel)
 
   const onChange = (e) => {
     e.preventDefault();
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  // const addPrice = (item) => {
-  //   setArray([...array, item])
-  //   // alert('added successfully')
 
-  //   fetchData()
-  // }
-  
-
-  const fetchData = async() => {
+  const fetchData = async () => {
     try {
-      const { data } = await axios.post('/hotel/getPrice',{array, people, nights,hotelName, placeName})
+      const { data } = await axios.post('/hotel/getPrice', {filteredData, hotelData})
       console.log(data);
-      // const payload = {
-      //   array: array,
-      //   price: data
-      // }
-      // dispatch(getPrice(payload))
+      dispatch(prices(data))
     } catch (error) {
       console.log(error);
     }
   }
 
-  const submitHandler = (e) => {
+  const submitHandler = async(e) => {
     e.preventDefault()
-
-    // let item = {
-    //   index: (new Date).getTime(),
-    //   roomType,
-    //   count,
-    //   price
-    // }
-
-    // addPrice(item)
+     await dispatch(getHotelData({ people, hotelName, placeName, nights }))
+     await dispatch(filteredRowsData())
+    await fetchData()
   }
+
 
   const onRowChange = (e, index) => {
     dispatch(handleRowItemChange({
@@ -92,6 +75,7 @@ function HotelEnquiryScreen() {
                   value={data.people}
                   onChange={onChange}
                   min='0'
+                  onfocus="this.blur()"
                   className="block p-2 w-full  text-darkColor bg-white shadow-sm rounded-sm  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
@@ -147,92 +131,93 @@ function HotelEnquiryScreen() {
                   className="block p-2 w-full text-darkColor bg-white shadow-sm rounded-sm  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-white"
                 />
               </div>
-              </div>
-              {rows.map((row,index) => (
-                <>
+            </div>
+            {rows.map((row, index) => (
+              <>
                 <div className="grid grid-cols-12 gap-5" key={index}>
-              <div className="mb-4 col-span-4">
-                <label
-                  htmlFor="bedroomsField"
-                  className="text-lg font-semibold text-darkColor"
-                >
-                  RoomType
-                </label>
-                <select
-                  id="bedroomsField"
-                  type="text"
-                  name="roomType"
-                  value={row.roomType}
-                  onChange={(e) => onRowChange(e,index)}
-                  className="block p-2 w-full text-darkColor bg-white shadow-sm rounded-sm  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-white"
-                >
-                  <option value='' >choose Room Type</option>
-                  <option name='oneBr' value='oneBr'>One BedRoom</option>
-                  <option name='twoBr' value='twoBr'>Two BedRoom</option>
-                  <option name='threeBr' value='threeBr'>Three BedRoom</option>
-                  <option name='sixBr' value='sixBr'>Six BedRoom</option>
-                  <option name='eightBr' value='eightBr'>Eight BedRoom</option>
-                </select>
-              </div>
+                  <div className="mb-4 col-span-4">
+                    <label
+                      htmlFor="bedroomsField"
+                      className="text-lg font-semibold text-darkColor"
+                    >
+                      RoomType
+                    </label>
+                    <select
+                      id="bedroomsField"
+                      type="text"
+                      name="roomType"
+                      value={row.roomType}
+                      onChange={(e) => onRowChange(e, index)}
+                      className="block p-2 w-full text-darkColor bg-white shadow-sm rounded-sm  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-white"
+                    >
+                      <option value='' >choose Room Type</option>
+                      <option name='oneBr' value='oneBr'>One BedRoom</option>
+                      <option name='twoBr' value='twoBr'>Two BedRoom</option>
+                      <option name='threeBr' value='threeBr'>Three BedRoom</option>
+                      <option name='sixBr' value='sixBr'>Six BedRoom</option>
+                      <option name='eightBr' value='eightBr'>Eight BedRoom</option>
+                    </select>
+                  </div>
 
-              <div className="mb-4 col-span-4">
-                <label
-                  htmlFor="bedroomsField"
-                  className="text-lg font-semibold text-darkColor"
-                >
-                  Count
-                </label>
-                <input
-                  id="bedroomsField"
-                  type="number"
-                  name="count"
-                  min='0'
-                  value={row.count}
-                  onChange={(e) => onRowChange(e,index)}
-                  className="block p-2 w-full text-darkColor bg-white shadow-sm rounded-sm  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-600 placeholder-white"
-                />
-              </div>
+                  <div className="mb-4 col-span-4">
+                    <label
+                      htmlFor="bedroomsField"
+                      className="text-lg font-semibold text-darkColor"
+                    >
+                      Count
+                    </label>
+                    <input
+                      id="bedroomsField"
+                      type="number"
+                      name="count"
+                      min='0'
+                      value={row.count}
+                      onChange={(e) => onRowChange(e, index)}
+                      className="block p-2 w-full text-darkColor bg-white shadow-sm rounded-sm  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-600 placeholder-white"
+                    />
+                  </div>
 
-              <div className="mb-4 col-span-3">
-                <label
-                  htmlFor="bedroomsField"
-                  className="text-lg font-semibold text-darkColor"
-                >
-                  Price
-                </label>
-                <input
-                  id="bedroomsField"
-                  type="number"
-                  name="price"
-                  min='0'
-                  value={row.price}
-                  onChange={(e) => onRowChange(e,index)}
-                  className="block p-2 w-full text-darkColor bg-white shadow-sm rounded-sm  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-white"
-                />
-              </div>
-              <div className=" col-span-1 flex items-center justify-center text-2xl text-red-600"
-              onClick={() => dispatch(removeRow(index))}><CgClose /> </div>
-              </div>
+                  <div className="mb-4 col-span-3">
+                    <label
+                      htmlFor="bedroomsField"
+                      className="text-lg font-semibold text-darkColor"
+                    >
+                      Price
+                    </label>
+                    <input
+                      id="bedroomsField"
+                      type="number"
+                      name="price"
+                      min='0'
+                      value={row.price}
+                      onChange={(e) => onRowChange(e, index)}
+                      className="block p-2 w-full text-darkColor bg-white shadow-sm rounded-sm  border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-white"
+                    />
+                  </div>
+                  <div className=" col-span-1 flex items-center justify-center text-2xl text-red-600"
+                    onClick={() => dispatch(removeRow(index))}><CgClose /> </div>
+                </div>
               </>
-              ))}
-              <div className="flex items-center">
-                <button className=" text-blue-600 underline font-medium  rounded-lg text-center"
-                  type="submit" onClick={() => dispatch(addNewRow())}>
-                  add more fileds
-                </button>
-              </div>
+            ))}
+            <div className="flex items-center justify-between">
+              <button className=" text-blue-600 underline font-medium  rounded-lg text-center"
+                onClick={() => dispatch(addNewRow())}>
+                add more fileds
+              </button>
+              <button className=" bg-darkColor hover:bg-zinc-600 py-2 px-4 font-medium  rounded-md text-center"
+                type="submit">
+                Submit
+              </button>
+            </div>
 
-            
+
           </form>
         </div>
         <div>
           <HotelResultScreen
-            people={people}
-            hotelName={hotelName}
-            placeName={placeName}
-            nights={nights}
-            hotelArray={hotelArray}
-            hotelPrice={hotelPrice}
+            hotelData={hotelData}
+            filteredData={filteredData}
+            price={price}
           />
         </div>
       </div>

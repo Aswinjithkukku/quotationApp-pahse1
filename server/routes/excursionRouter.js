@@ -7,9 +7,11 @@ const {
   updateExcursionEnquiry,
 } = require("../controllers/excursionControllers");
 
-router.route("/create").post(addExcursions);
-router.route("/enquiry").post(excursionEnquiry);
-router.route("/all").get(getExcursions);
-router.route("/enquiry/update").post(updateExcursionEnquiry);
+const { isAuthenticatedUser,isAgent,isSuperAdmin } = require('../middlewares/auth.js')
+
+router.route("/create").post(isAuthenticatedUser,addExcursions);
+router.route("/enquiry").post(isAuthenticatedUser,excursionEnquiry);
+router.route("/all").get(isAuthenticatedUser,getExcursions);
+// router.route("/enquiry/update").post(updateExcursionEnquiry);
 
 module.exports = router;

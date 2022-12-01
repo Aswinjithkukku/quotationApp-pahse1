@@ -30,8 +30,8 @@ const sidebarLinks = [
         icon: <BsPeople />,
     },
     {
-        name: "Places",
-        to: "/places",
+        name: "quotations",
+        to: "/admin/quotations",
         icon: <BsCompass />,
     },
 ];

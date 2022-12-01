@@ -16,13 +16,13 @@ const transferSlice = createSlice({
         airports: [],
         places: [],
         transferEnquiry: {},
-        transferData: {}
+        // transferData: {}
     },
     reducers: {
         transferEquiryData: (state, action) => {
             // console.log(action.payload);
             state.transferEnquiry = action.payload
-            state.transferData = action.payload
+            // state.transferData = action.payload
         }
     },
     extraReducers: {

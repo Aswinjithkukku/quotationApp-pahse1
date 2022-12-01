@@ -14,6 +14,13 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
+      amendmentNumber: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
+      },
       transferQuotationId: {
         type: DataTypes.STRING,
         allowNull: true

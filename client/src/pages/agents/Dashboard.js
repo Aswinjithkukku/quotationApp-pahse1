@@ -1,6 +1,7 @@
 import React from "react";
 import ExcursionScreen from "./ExcursionScreen";
 import HotelEnquiryScreen from "./HotelEnquiryScreen";
+import QuotationSubmit from "./QuotationSubmit";
 import TransferEnquiryScreen from "./TransferEnquiryScreen";
 
 function Dashboard() {
@@ -9,6 +10,7 @@ function Dashboard() {
       <TransferEnquiryScreen />
       <HotelEnquiryScreen />{" "}
       <ExcursionScreen />
+      <QuotationSubmit />
     </div>
   );
 }

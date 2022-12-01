@@ -44,31 +44,21 @@ exports.getExcursions = catchAsyncErrors( async(req,res,next) => {
 })
 
 // update enquiry =>  /api/excursion/enquiry/update
-exports.updateExcursionEnquiry = catchAsyncErrors( async(req,res,next) => {
-    const { array } = req.body
-    // console.log(array);
-    // [
-    //     id
-    //     peoples
-    //     excursionId
-    // ]
-    let newArray = []
-    
-    // let excursion = array.map((element) => (
-    //     console.log(element)
-    //     Excursions.findByPk(element.excursion)
-    // ))
-    console.log(newArray);
-
-    // let data = 0
-    // array.forEach(element => {
-    //      data += element.id
-    //      return data
-    // });
-    // console.log(data);
-    res.status(200).json({
-        success: true,
-        excursion
-    })
-})
+// exports.updateExcursionEnquiry = catchAsyncErrors( async(req,res,next) => {
+//     console.log(req.body);
+//     // const totalPrice = updatedCheckedState.reduce(
+//     //     (sum, currentState, index) => {
+//     //       if (currentState === true) {
+//     //         console.log(excursions[index].price);
+//     //         return sum + Number(excursions[index].price);
+//     //       }
+//     //       return sum;
+//     //     },
+//     //     0
+//     //   );
+//     res.status(200).json({
+//         success: true,
+//         // excursion
+//     })
+// })
 
