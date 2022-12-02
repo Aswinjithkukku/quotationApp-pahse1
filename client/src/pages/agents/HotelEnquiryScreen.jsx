@@ -4,7 +4,6 @@ import axios from '../../axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { getHotelData, addNewRow, handleRowItemChange, removeRow, filteredRowsData, prices } from '../../redux/slices/hotelSlice'
 import { CgClose } from "react-icons/cg";
-import { useEffect } from "react";
 
 function HotelEnquiryScreen() {
   const dispatch = useDispatch()
@@ -30,7 +29,13 @@ function HotelEnquiryScreen() {
 
   const fetchData = async () => {
     try {
-      const { data } = await axios.post('/hotel/getPrice', {filteredData, hotelData})
+      const token = localStorage.getItem('token')
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      }
+      const { data } = await axios.post('/hotel/getPrice', { filteredData, hotelData }, config)
       console.log(data);
       dispatch(prices(data))
     } catch (error) {
@@ -38,10 +43,10 @@ function HotelEnquiryScreen() {
     }
   }
 
-  const submitHandler = async(e) => {
+  const submitHandler = async (e) => {
     e.preventDefault()
-     await dispatch(getHotelData({ people, hotelName, placeName, nights }))
-     await dispatch(filteredRowsData())
+    await dispatch(getHotelData({ people, hotelName, placeName, nights }))
+    await dispatch(filteredRowsData())
     await fetchData()
   }
 

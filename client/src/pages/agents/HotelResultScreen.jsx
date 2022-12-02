@@ -88,19 +88,6 @@ function HotelResultScreen({ hotelData, filteredData,price }) {
               <span className="text-lg font-bold ml-2">{price?.sumPerPerson} </span>
             </div>
 
-
-
-          {/* <div className="thrid">
-        <div className="flex items-center mt-5">
-            <span className="text-xl font-bold">
-              <BsCashCoin />
-            </span>
-            <span className="text-lg font-bold ml-2">Price(Total) : </span>
-            <span className="text-lg font-bold ml-2">{transferEnquiry?.transferData?.totalamount ? transferEnquiry?.transferData?.totalamount : ''}</span>
-          </div>
-        </div> */}
-
-
         </div>
       </div>
     </Fragment>

@@ -13,8 +13,15 @@ function PlaceLists() {
 
   const datafetch = async () => {
     try {
+
+      const token = localStorage.getItem('token')
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      }
       const { data } = await axios.get(
-        "/location/places"
+        "/location/places", config
       );
 
       setPlaces(data.places);

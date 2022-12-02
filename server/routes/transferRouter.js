@@ -14,7 +14,7 @@ const {
 
 router
   .route("/loadTransferEnquiryData")
-  .get(isAuthenticatedUser, loadTransferEnquiryData);
+  .get(isAuthenticatedUser,loadTransferEnquiryData);
 router.route("/enquiry").post(isAuthenticatedUser, transferEnquiry);
 router
   .route("/transferCombination/create")

@@ -44,11 +44,9 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  // TransferQuotation.associate = (models) => {
-  //   TransferQuotation.hasMany(models.ExcursionDetails, {
-  //     onDelete: "cascade",
-  //   });
-  // };
+  TransferQuotation.associate = (models) => {
+    TransferQuotation.belongsTo(models.QuotationAmendments);
+  };
 
   return TransferQuotation;
 };

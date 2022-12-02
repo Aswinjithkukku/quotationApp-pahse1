@@ -3,8 +3,14 @@ import axios from '../../axios'
 
 export const getCountries = createAsyncThunk(
     "location/getCountries",
-    async(dispatch, getState) => {
-        const response =  await axios.get('/location/countries')
+    async(dispatch, {getState}) => {
+        const { token } = getState().user
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+              },
+        }
+        const response =  await axios.get('/location/countries', config)
         return response.data;
     }
 )

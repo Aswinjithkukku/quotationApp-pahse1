@@ -14,9 +14,14 @@ function CreatePlace() {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      console.log(place);
+      const token = localStorage.getItem('token')
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      }
       const { data } = await axios.post(
-        "/location/place/create",{name:place, description, countryId }
+        "/location/place/create",{name:place, description, countryId }, config
       );
     } catch (error) {
       console.log(error);

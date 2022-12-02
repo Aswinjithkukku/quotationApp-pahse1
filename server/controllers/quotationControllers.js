@@ -13,6 +13,22 @@ exports.prepareQuotation = catchAsyncErrors(async (req, res, next) => {
   console.log(req);
 
   const quotationNumber = 1000 + quotationfind.length;
+
+    // create quotation amendments
+    const amendment = await QuotationAmendments.findAll({
+      where: { quotationNumber: quotationNumber },
+    });
+    const amendmentNumber = amendment + 1;
+    console.log(amendmentNumber);
+  
+    const quotationAmendment = await QuotationAmendments.create({
+      quotationNumber,
+      amendmentNumber,
+      TransferQuotationId: null,
+      HotelQuotationId: null,
+      ExcursionQuotationId: null,
+    });
+
   // create transfer quotation
   const {
     transferfrom,
@@ -23,7 +39,7 @@ exports.prepareQuotation = catchAsyncErrors(async (req, res, next) => {
     totalamount,
     amountPerPerson,
   } = req.body.transferData;
-
+  console.log(returnStatus);
   let transferQuotation;
   if (
     transferfrom &&
@@ -39,11 +55,15 @@ exports.prepareQuotation = catchAsyncErrors(async (req, res, next) => {
       transferfrom,
       transferTo,
       transferStatus,
-      returnStatus,
+      returnStatus : returnStatus ? returnStatus === true
+      ? 1
+      : 0
+    : 0, 
       people,
       totalamount,
       amountPerPerson,
-      UserId: req.user.id
+      QuotationAmendmentId: quotationAmendment.id
+      
     });
     // create hotel quotation
   }
@@ -77,7 +97,7 @@ exports.prepareQuotation = catchAsyncErrors(async (req, res, next) => {
       nights,
       totalamount: hoteltotalamount,
       amountPerPerson: hotelamountPerPerson,
-      UserId: req.user.id
+      QuotationAmendmentId: quotationAmendment.id
     });
   }
   // create excursion quotation
@@ -102,32 +122,22 @@ exports.prepareQuotation = catchAsyncErrors(async (req, res, next) => {
       excursions,
       totalamount: excursionTotalAmount,
       amountPerPerson: excursionTotalamountPerPerson,
-      UserId: req.user.id
+      QuotationAmendmentId: quotationAmendment.id
     });
   }
-  // create quotation amendments
-  const amendment = await QuotationAmendments.findAll({
-    where: { quotationNumber: quotationNumber },
-  });
-  const amendmentNumber = amendment + 1;
-  console.log(amendmentNumber);
 
-  const quotationAmendment = await QuotationAmendments.create({
-    quotationNumber,
-    amendmentNumber,
+  const updateQuotationAmendment = await QuotationAmendments.update( {
     transferQuotationId: transferQuotation?.id,
     hotelQuotationId: hotelQuotation?.id,
     excursionQuotationId: excursionQuotation?.id,
-    UserId: req.user.id
-  });
+  }, { where: { id: quotationAmendment.id } } )
 
   // create quotation
 
   const quotation = await Quotations.create({
     quotationNumber,
     amendmentNumber,
-    QuotationAmendmentId: quotationAmendment.id,
-    UserId: req.user.id
+    QuotationAmendmentId: quotationAmendment.id
   });
 
   res.status(201).json({
@@ -141,13 +151,28 @@ exports.prepareQuotation = catchAsyncErrors(async (req, res, next) => {
 // list quotation => /api/quotation/lists
 exports.getQuotations = catchAsyncErrors(async (req, res, next) => {
 
-  const quotations = await Quotations.findAll({ include: QuotationAmendments})
+  const quotations = await Quotations.findAll({ include: [
+    {model: QuotationAmendments,
+    include: [{
+      model:TransferQuotation
+    },{
+      model:HotelQuotation
+    },{
+      model:ExcursionQuotation
+    }]}
+  ]})
 
   res.status(200).json({
     success: true,
     quotations,
-    // transfer,
-    // hotel,
-    // excursion
   });
 });
+
+// find single quotation => /api/quotation/list
+exports.singleQuotation = catchAsyncErrors(async( req,res, next) => {
+
+
+  res.status(200).json({
+    success: true
+  })
+})

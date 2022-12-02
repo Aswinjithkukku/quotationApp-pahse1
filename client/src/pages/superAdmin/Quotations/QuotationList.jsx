@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getQuotations } from '../../../redux/slices/quotationSlice'
+import { BsArrowLeft } from "react-icons/bs";
 
 function QuotationList() {
   const dispatch = useDispatch()
@@ -12,33 +13,33 @@ function QuotationList() {
   useEffect(() => {
 
     dispatch(getQuotations())
-  },[dispatch])
+  }, [dispatch])
 
   return (
-    <div className='ml-[15em]'>
-        <div className="overflow-x-auto relative shadow-md sm:rounded-lg mt-10">
-      <div>
+    <div className='relative ml-[15em]'>
+      <div className="overflow-x-auto relative shadow-md sm:rounded-lg mt-10">
+        <div>
           <Link to='/admin/quotations'>
-          <button className="px-4 bg-darkColor py-2 rounded-md mb-2"> Create</button>
+            <button className="px-4 bg-darkColor py-2 rounded-md mb-2"> Create</button>
           </Link>
         </div>
         <table className="w-full text-sm text-left text-gray-500 ">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
             <tr>
-               <th scope="col" className="py-3 px-6">
-                ID
-              </th> 
               <th scope="col" className="py-3 px-6">
-                Airport
+                Quotation Number
               </th>
               <th scope="col" className="py-3 px-6">
-                place
+                AmendmentNumber
               </th>
               <th scope="col" className="py-3 px-6">
-                Private
+                Transfer Quotation
               </th>
               <th scope="col" className="py-3 px-6">
-                Shared
+                Hotel quotation
+              </th>
+              <th scope="col" className="py-3 px-6">
+                Excursion Quotation
               </th>
             </tr>
           </thead>
@@ -46,11 +47,11 @@ function QuotationList() {
             {quotations &&
               quotations.map((quotation) => (
                 <tr className="bg-white border-b " key={quotation.id}>
-                  <td className="py-4 px-6"></td>
-                  <td className="py-4 px-6"></td>
-                  <td className="py-4 px-6"> </td>
-                  <td className="py-4 px-6"></td>
-                  <td className="py-4 px-6"> </td>
+                  <td className="py-4 px-6">{quotation.quotationNumber} </td>
+                  <td className="py-4 px-6">{ quotation.amendmentNumber}</td>
+                  <td className="py-4 px-6"> <BsArrowLeft /></td>
+                  <td className="py-4 px-6"><BsArrowLeft /></td>
+                  <td className="py-4 px-6"> <BsArrowLeft /></td>
 
                 </tr>
               ))}

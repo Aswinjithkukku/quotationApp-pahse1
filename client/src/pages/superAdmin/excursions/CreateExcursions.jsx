@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "../../../axios";
-import { useDispatch, useSelector } from 'react-redux'
 
 function CreateExcursions() {
-  // const dispatch = useDispatch()
-
-  const { airports, places } = useSelector(state => state.transfer)
 
   const [data, setData] = useState({
     name: '',
@@ -14,11 +10,6 @@ function CreateExcursions() {
     price: '',
   });
 
-  // useEffect(() => {
-  //   dispatch(getTransferEnquiryData());
-  // }, [dispatch]);
-
-
   const onDataChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -26,8 +17,15 @@ function CreateExcursions() {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
+      const token = localStorage.getItem('token')
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      }
       const response = await axios.post(
-        "/excursion/create", data );
+        "/excursion/create", data , config);
+        
         window.alert('item Added successfully')
     } catch (error) {
       console.log(error);

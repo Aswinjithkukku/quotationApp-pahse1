@@ -3,8 +3,14 @@ import axios from '../../axios'
 
 export const getExcursions = createAsyncThunk(
     "excursion/getExcursions",
-    async(dispatch, getState) => {
-        const response =  await axios.get('/excursion/all')
+    async(dispatch, {getState}) => {
+        const { token } = getState().user
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+              },
+        }
+        const response =  await axios.get('/excursion/all', config)
         return response.data;
     }
 )

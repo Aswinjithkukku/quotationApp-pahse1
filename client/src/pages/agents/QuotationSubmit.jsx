@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from '../../axios'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 
 
@@ -36,11 +37,17 @@ function QuotationSubmit() {
 
 const prepareQuotation = async() => {
   try {
+    const token = localStorage.getItem('token')
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    }
     const quotation = await axios.post('/quotation/create', {
       transferData,
       hoteldata,
       excursionData
-    } )
+    }, config )
     console.log(quotation.data);
   } catch (error) {
     console.log(error);
@@ -49,7 +56,11 @@ const prepareQuotation = async() => {
   return (
     <div className="max-w-screen-2xl mx-auto mb-10">
       <div className="mt-7  border-2  shadow-md py-7 px-5 flex justify-center items-center">
-        <button className='bg-darkColor text-white px-10 py-2 shadow-md' onClick={() => prepareQuotation()}>Prepare Quotation</button>
+        {/* <Link to='/quotation'> */}
+        <button className='bg-darkColor text-white px-10 py-2 shadow-md' 
+        onClick={() => prepareQuotation()}
+        >Prepare Quotation</button>
+        {/* </Link> */}
       </div>
     </div>
   )

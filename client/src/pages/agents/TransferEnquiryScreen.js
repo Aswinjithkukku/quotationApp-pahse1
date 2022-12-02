@@ -43,9 +43,15 @@ function TransferEnquiryScreen() {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
+      const token = localStorage.getItem('token')
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      }
       const response = await axios.post(
         "http://127.0.0.1:4000/api/transfer/enquiry",
-        transferDatas
+        transferDatas, config
       );
       const payload = {
         transferEnquiry: {
@@ -53,7 +59,7 @@ function TransferEnquiryScreen() {
           airportCode,
           placeId,
           transferStatus,
-          returnStatus,
+          returnStatus
         },
         transferData: response.data,
       };

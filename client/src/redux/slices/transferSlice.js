@@ -3,8 +3,13 @@ import axios from '../../axios'
 
 export const getTransferEnquiryData = createAsyncThunk(
     "transfer/getTransferEnquiryData",
-    async(dispatch, getState) => {
-        const response =  await axios.get('/transfer/loadTransferEnquiryData')
+    async(args, {getState}) => {
+        const { token } = getState().user
+        const response =  await axios.get('/transfer/loadTransferEnquiryData', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+              },
+        })
         return response.data;
     }
 )

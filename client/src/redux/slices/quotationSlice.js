@@ -3,8 +3,14 @@ import axios from '../../axios'
 
 export const getQuotations = createAsyncThunk(
     "quotation/getQuotations",
-    async(dispatch, getState) => {
-        const response =  await axios.get('/quotation/lists')
+    async(dispatch, {getState}) => {
+        const { token } = getState().user
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+              },
+        }
+        const response =  await axios.get('/quotation/lists', config)
         return response.data;
     }
 )

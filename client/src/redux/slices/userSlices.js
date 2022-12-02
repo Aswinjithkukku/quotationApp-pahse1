@@ -21,8 +21,14 @@ const initialState = {
 
 const fetchUsers = createAsyncThunk(
     '/user/fetchUsers',
-    async (dispatch,  getState ) => {
-        const response = await axios.get('/admin/all');
+    async (dispatch,  {getState} ) => {
+        const { token } = getState().user
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+              },
+        }
+        const response = await axios.get('/admin/all', config);
         return response.data;
     }
 );

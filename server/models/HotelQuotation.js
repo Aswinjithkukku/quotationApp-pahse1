@@ -58,11 +58,9 @@ module.exports = (sequelize, DataTypes) => {
       },
     });
   
-    // HotelQuotation.associate = (models) => {
-    //   HotelQuotation.hasMany(models.ExcursionDetails, {
-    //     onDelete: "cascade",
-    //   });
-    // };
+    HotelQuotation.associate = (models) => {
+      HotelQuotation.belongsTo(models.QuotationAmendments);
+    };
   
     return HotelQuotation;
   };

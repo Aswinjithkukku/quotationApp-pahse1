@@ -76,7 +76,7 @@ function TransferResultScreen({
                   ? transferEnquiry?.transferEnquiry?.returnStatus === true
                     ? "return needed"
                     : "no return needed"
-                  : ""}{" "}
+                  : "no return needed"}{" "}
               </span>
             </div>
             <div className="flex items-center mt-5">

@@ -14,10 +14,10 @@ const {
   isSuperAdmin,
 } = require("../middlewares/auth.js");
 
-router.route("/login").post(isAuthenticatedUser, loginUser);
-router.route("/logout").get(isAuthenticatedUser, logoutUser);
-router.route("/register").post(isAuthenticatedUser, registerUser);
-router.route("/admin/all").get(isAuthenticatedUser, allUsers);
+router.route("/login").post( loginUser);
+router.route("/logout").get( logoutUser);
+router.route("/register").post( registerUser);
+router.route("/admin/all").get( isAuthenticatedUser,allUsers);
 router.route("/token").get(isAuthenticatedUser, checkToken);
 
 module.exports = router;

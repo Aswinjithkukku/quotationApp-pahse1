@@ -33,9 +33,10 @@ export default function App() {
             Authorization: `Bearer ${token}`,
           },
         });
+        // headers: { Authorization: `Bearer ${jwtToken}` },
         dispatch(updateUser(response.data));
-        setLoading(false);
       }
+      setLoading(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -43,8 +44,9 @@ export default function App() {
   },[dispatch])
 
 
-  return (
-    <Wrapper>
+  return loading ? 
+  <div>Loading....</div> : (
+      <Wrapper>
       <Routes>
         <Route path="/login" element={<LoginScreen/>} />
         <Route
@@ -58,5 +60,5 @@ export default function App() {
         <Route path="/*" element={<CustomRoutes />} />
       </Routes>
     </Wrapper>
-  );
+    )
 }

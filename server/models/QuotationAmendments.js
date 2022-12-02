@@ -37,6 +37,15 @@ module.exports = (sequelize, DataTypes) => {
   
     QuotationAmendments.associate = (models) => {
       QuotationAmendments.hasMany(models.Quotations);
+      QuotationAmendments.hasMany(models.TransferQuotation, {
+        onDelete: 'cascade'
+      });
+      QuotationAmendments.hasMany(models.ExcursionQuotation,{
+        onDelete: 'cascade'
+      });
+      QuotationAmendments.hasMany(models.HotelQuotation,{
+        onDelete: 'cascade'
+      });
     };
   
     return QuotationAmendments;

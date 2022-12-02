@@ -34,11 +34,9 @@ module.exports = (sequelize, DataTypes) => {
     //id of excursiion
   });
 
-  // ExcursionQuotation.associate = (models) => {
-  //   ExcursionQuotation.hasMany(models.ExcursionDetails, {
-  //     onDelete: "cascade",
-  //   });
-  // };
+  ExcursionQuotation.associate = (models) => {
+    ExcursionQuotation.belongsTo(models.QuotationAmendments);
+  };
 
   return ExcursionQuotation;
 };
