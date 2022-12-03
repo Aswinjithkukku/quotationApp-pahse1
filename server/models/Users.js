@@ -52,12 +52,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     })
   
-//     Users.associate = (models) => {
-//       Users.hasMany(models.ExcursionQuotation)
-//       Users.hasMany(models.TransferQuotation)
-//       Users.hasMany(models.HotelQuotation)
-//       Users.hasMany(models.Quotations)
-//       Users.hasMany(models.QuotationAmendments)
-//   }
+    Users.associate = (models) => {
+      Users.hasMany(models.ExcursionQuotation)
+      Users.hasMany(models.TransferQuotation)
+      Users.hasMany(models.HotelQuotation)
+      Users.hasMany(models.Quotations)
+      Users.hasMany(models.QuotationAmendments)
+  }
     return Users
   }

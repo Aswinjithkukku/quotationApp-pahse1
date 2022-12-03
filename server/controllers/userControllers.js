@@ -84,6 +84,7 @@ exports.allUsers = catchAsyncErrors( async(req, res, next) => {
 
 exports.checkToken = catchAsyncErrors( async(req,res,next) => {
   res.status(200).json({
+    id: req.user.id,
     name : req.user.name,
     email: req.user.email,
     role: req.user.role

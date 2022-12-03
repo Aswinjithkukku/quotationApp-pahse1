@@ -25,7 +25,9 @@ module.exports = (sequelize, DataTypes) => {
     });
   
     Quotations.associate = (models) => {
-      Quotations.belongsTo(models.QuotationAmendments);
+      Quotations.hasMany(models.QuotationAmendments, {
+        onDelete: 'cascade'
+      });
 
     };
   

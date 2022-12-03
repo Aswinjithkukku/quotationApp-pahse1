@@ -6,12 +6,12 @@ const { Users } = require("../models")
 exports.isAuthenticatedUser = catchAsyncErrors( async (req,res,next) => {
     // const token = req.header('Authorization').split(" ")[1];
     const token = req.headers.authorization?.split(" ")[1];
-    if (
-        req.header.authorization === undefined ||
-        req.header.authorization.split(' ')[1] === 'undefined'
-    ) {
-        return res.status(401).json('Login first to access this resource')
-    }
+    // if (
+    //     req.header.authorization === undefined ||
+    //     req.header.authorization.split(' ')[1] === 'undefined'
+    // ) {
+    //     return res.status(401).json('Allow token first to access this resourse')
+    // }
 
     if(!token) {
         return res.status(401).json('Login first to access this resource')

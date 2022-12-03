@@ -12,9 +12,14 @@ function Navbar() {
 
     return (
         <div className="w-[100%] flex items-center justify-between py-[16px] px-[20px] bg-darkColor shadow-lg">
-            <i className="text-darkColor text-[24px] cursor-pointer flex items-center justify-center invisible">
+            <span>
+            {/* <i className="text-darkColor text-[24px] cursor-pointer flex items-center justify-center none">
                 <FiMenu />
-            </i>
+            </i> */}
+            <Link to='/previous' className="text-white text-lg cursor-pointer flex items-center justify-center">
+                Quotations
+            </Link>
+            </span>
             <div className="flex items-center">
                 <button className="relative p-0 h-auto mr-[1.5em] text-primaryColor flex items-center justify-center bg-transparent hover:bg-transparent text-[20px]">
                     <BsBellFill />
@@ -22,7 +27,7 @@ function Navbar() {
                 </button>
                 <div className="relative w-[35px] h-[35px] bg-[#dbdbdb] rounded-full cursor-pointer">
                     <img
-                        src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.flaticon.com%2Ffree-icon%2Fimage_1160358&psig=AOvVaw3MHewklTCDIN9z7TujrHgM&ust=1669449330372000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCJjsssTtyPsCFQAAAAAdAAAAABAE"
+                        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                         alt=""
                         onClick={() => {
                             setIsDropDownOpen(!isDropDownOpen);
@@ -30,7 +35,7 @@ function Navbar() {
                         className="w-full h-full object-cover rounded-full"
                     />
                     {isDropDownOpen && (
-                        <div className="absolute bg-secondaryColor right-0 top-[50px] rounded w-[200px] z-10 shadow-sm">
+                        <div className="absolute bg-darkColor right-0 top-[50px] rounded w-[200px] z-10 shadow-sm">
                             <ul>
                                 <li>
                                     <Link
