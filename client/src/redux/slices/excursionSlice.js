@@ -38,6 +38,10 @@ const excursionSlice = createSlice({
         },
         setPeopleCount: (state,action) => {
             state.people = action.payload
+        },
+        clearExcursionData: (state,action) => {
+            state.people = 0
+            state.selectedExcursions = []
         }
     },
     extraReducers: {
@@ -51,7 +55,8 @@ const excursionSlice = createSlice({
 export const {
     assignValue,
     removeValue,
-    setPeopleCount
+    setPeopleCount,
+    clearExcursionData
 } = excursionSlice.actions
 
 export default excursionSlice.reducer

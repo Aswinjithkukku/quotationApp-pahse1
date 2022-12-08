@@ -58,6 +58,11 @@ export const hotelSlice = createSlice({
         },
         prices: (state,action) => {
             state.price = action.payload
+        },
+        clearHotelData: (state,action) => {
+            state.hotelData = {}
+            state.filteredData = []
+            state.price = {}
         }
 
     }
@@ -69,7 +74,8 @@ export const {
     removeRow,
     getHotelData,
     filteredRowsData,
-    prices
+    prices,
+    clearHotelData
 } = hotelSlice.actions;
 
 export default hotelSlice.reducer;

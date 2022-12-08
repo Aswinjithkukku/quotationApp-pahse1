@@ -1,5 +1,4 @@
 const html_to_pdf = require('html-pdf-node')
-const { options } = require('../app')
 
 const createQuotationPdf = async({}) => {
     let options = {

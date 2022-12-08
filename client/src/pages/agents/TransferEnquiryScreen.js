@@ -37,7 +37,7 @@ function TransferEnquiryScreen() {
     airportCode,
     placeId,
     transferStatus,
-    returnStatus,
+    returnStatus : returnStatus === true ? 'true' : 'false',
   };
 
   const submitHandler = async (e) => {
@@ -71,7 +71,7 @@ function TransferEnquiryScreen() {
   return (
     <div className="max-w-screen-2xl mx-auto">
       <form onSubmit={submitHandler}>
-        <div className="mt-20 grid grid-cols-5 gap-10 border-2 bg-white py-10 px-5 shadow-md">
+        <div className="mt-7 grid grid-cols-5 gap-10 border-2 bg-white py-10 px-5 shadow-md">
           <div className="mb-4">
             <label
               htmlFor="airportField"

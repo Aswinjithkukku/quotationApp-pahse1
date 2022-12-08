@@ -7,6 +7,7 @@ const {
   getTransferQuotationData,
   getHotelQuotationData,
   getExcursionQuotationData,
+  updateQuotation,
 } = require("../controllers/quotationControllers.js");
 const {
   isAuthenticatedUser,
@@ -20,5 +21,7 @@ router.route("/list/own").get(isAuthenticatedUser, userQuotations);
 router.route("/transfer/data/:id").get(isAuthenticatedUser, getTransferQuotationData);
 router.route("/hotel/data/:id").get(isAuthenticatedUser, getHotelQuotationData);
 router.route("/excursion/data/:id").get(isAuthenticatedUser, getExcursionQuotationData);
+router.route("/update/:id").post(isAuthenticatedUser, updateQuotation);
+
 
 module.exports = router;

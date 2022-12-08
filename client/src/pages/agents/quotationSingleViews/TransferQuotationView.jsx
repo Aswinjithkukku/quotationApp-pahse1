@@ -4,13 +4,18 @@ import { RiCarWashingLine } from "react-icons/ri";
 import { TbTruckReturn } from "react-icons/tb";
 import { BsCashCoin } from "react-icons/bs";
 import { MdClose } from "react-icons/md";
+import { useSelector } from 'react-redux';
 
-function TransferQuotationView() {
+function TransferQuotationView({ setTransferPopUp, transferPopUp }) {
+
+  const { singleTransfer, loading } = useSelector(state => state.quotation)
 
   return (
     <div className='text-black bg-darkColor w-4/12  shadow-md pb-10'>
+      {loading ? 'loading....' : (
+        <>
         <div className='flex justify-end mt-5 mr-5'>
-            <span className='text-3xl text-purple-700'>
+            <span className='text-3xl text-purple-700 cursor-pointer' onClick={() => setTransferPopUp(!transferPopUp)}>
                 <MdClose />
             </span>
         </div>
@@ -31,7 +36,7 @@ function TransferQuotationView() {
                 Number of Peoples -
               </span>
               <span className="text-lg font-medium ml-2">
-                2
+                {singleTransfer?.people}
               </span>
             </div>
 
@@ -43,7 +48,7 @@ function TransferQuotationView() {
                 Airport -
               </span>
               <span className="text-lg font-medium ml-2">
-                55
+                {singleTransfer?.transferfrom}
               </span>
             </div>
 
@@ -55,7 +60,7 @@ function TransferQuotationView() {
                 Destination -
               </span>
               <span className="text-lg font-medium ml-2">
-                5
+                {singleTransfer?.transferTo}
               </span>
             </div>
 
@@ -67,7 +72,7 @@ function TransferQuotationView() {
                 Type of Travel -
               </span>
               <span className="text-lg font-medium ml-2">
-                5
+                {singleTransfer?.transferStatus}
               </span>
             </div>
 
@@ -79,7 +84,7 @@ function TransferQuotationView() {
                 Return Status -
               </span>
               <span className="text-lg font-medium ml-2">
-                yes
+                {singleTransfer?.returnStatus === true ? "yes" : "no"}
               </span>
             </div>
 
@@ -91,7 +96,7 @@ function TransferQuotationView() {
                 Total Price -
               </span>
               <span className="text-lg font-medium ml-2">
-                5
+                {singleTransfer?.totalamount}
               </span>
             </div>
 
@@ -103,12 +108,14 @@ function TransferQuotationView() {
                 Price per person -
               </span>
               <span className="text-lg font-medium ml-2">
-                5
+                {singleTransfer?.amountPerPerson}
               </span>
             </div>
 
         </div>
         </div>
+        </>
+        )}
     </div>
   )
 }

@@ -88,15 +88,23 @@ const quotationSlice = createSlice({
             state.loading = false
             state.userQuotation = action.payload.quotations
         },
+        [transferQuotationData.pending]: (state, action) => {
+            state.loading = true
+        },
         [transferQuotationData.fulfilled]: (state, action) => {
             state.loading = false
             state.singleTransfer = action.payload.transfer
-            console.log(action.payload.transfer);
+        },
+        [hotelQuotationData.pending]: (state, action) => {
+            state.loading = true
         },
         [hotelQuotationData.fulfilled]: (state, action) => {
             state.loading = false
             state.singleHotel = action.payload.hotel
             console.log(action.payload.hotel);
+        },
+        [excursionQuotationData.pending]: (state, action) => {
+            state.loading = true
         },
         [excursionQuotationData.fulfilled]: (state, action) => {
             state.loading = false

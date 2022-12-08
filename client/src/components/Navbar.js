@@ -12,12 +12,15 @@ function Navbar() {
 
     return (
         <div className="w-[100%] flex items-center justify-between py-[16px] px-[20px] bg-darkColor shadow-lg">
-            <span>
+            <span className="flex space-x-10">
             {/* <i className="text-darkColor text-[24px] cursor-pointer flex items-center justify-center none">
                 <FiMenu />
             </i> */}
-            <Link to='/previous' className="text-white text-lg cursor-pointer flex items-center justify-center">
-                Quotations
+            <Link to='/' className="text-white text-lg cursor-pointer flex items-center justify-center special-text-title font-extrabold">
+                Travel Quotation
+            </Link>
+            <Link to='/previous' className="text-slate-300 text-base hover:bg-gray-600 rounded-md px-2 py-1 cursor-pointer flex items-center justify-center ">
+                <i>Previous Quotations</i>
             </Link>
             </span>
             <div className="flex items-center">

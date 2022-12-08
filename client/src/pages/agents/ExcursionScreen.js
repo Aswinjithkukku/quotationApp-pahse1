@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "../../axios";
+import React, { useEffect } from "react";
 import { getExcursions } from "../../redux/slices/excursionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ExcursionResultScreen from "./ExcursionResultScreen";

@@ -1,10 +1,14 @@
 import React from 'react'
 import axios from '../../../axios'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { clearExcursionData } from '../../../redux/slices/excursionSlice' 
+import { clearHotelData } from '../../../redux/slices/hotelSlice' 
+import { clearTransferData } from '../../../redux/slices/transferSlice' 
 
 
 
 function QuotationSubmit() {
+  const dispatch = useDispatch()
 
   const { transferEnquiry } = useSelector( state => state.transfer )
   const { hotelData, filteredData, price } = useSelector( state => state.hotel )
@@ -57,7 +61,12 @@ const prepareQuotation = async() => {
       <div className="mt-7  border-2  shadow-md py-7 px-5 flex justify-center items-center">
         {/* <Link to='/quotation'> */}
         <button className='bg-darkColor text-white px-10 py-2 shadow-md' 
-        onClick={() => prepareQuotation()}
+        onClick={async () => {
+          await prepareQuotation()
+          dispatch(clearExcursionData())
+          dispatch(clearHotelData())
+          dispatch(clearTransferData())
+        }}
         >Prepare Quotation</button>
         {/* </Link> */}
       </div>
