@@ -6,7 +6,7 @@ const sendEmail = async ({subject, message}) => {
         port: '587',
         auth: {
             user: "kukkukukku2001@gmail.com",
-            pass: "firefox@007"
+            pass: ""
         },
         tls: {
             rejectUnauthorized: false
