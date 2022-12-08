@@ -36,7 +36,7 @@ exports.prepareQuotation = catchAsyncErrors(async (req, res, next) => {
       TransferQuotationId: null,
       HotelQuotationId: null,
       ExcursionQuotationId: null,
-      QuotaionId: quotation.id,
+      QuotationId: quotation.id,
       UserId: req.user.id
     });
 
@@ -346,9 +346,9 @@ exports.updateQuotation = catchAsyncErrors(async(req,res,next) => {
 })
 
 
-// finding quotation build bu user => /api/quotation/lists/:userid
+// finding quotation build bu user => /api/quotation/lists/own
 exports.userQuotations = catchAsyncErrors(async(req,res,next) => {
-  const params = req.params.id
+  const params = req.user.id
 
   const quotations = await Quotations.findAll({ 
     where: { UserId: params },
@@ -357,5 +357,38 @@ exports.userQuotations = catchAsyncErrors(async(req,res,next) => {
   res.status(200).json({
     success: true,
     quotations
+  })
+})
+
+// get transferQuotationData => /api/quotation/transfer/data/:id
+exports.getTransferQuotationData = catchAsyncErrors(async(req,res,next) => {
+  const params = req.params.id
+  const transfer = await TransferQuotation.findByPk(params)
+
+  res.status(200).json({
+    success: true,
+    transfer
+  })
+})
+
+// get hotelQuotationData => /api/quotation/hotel/data/:id
+exports.getHotelQuotationData = catchAsyncErrors(async(req,res,next) => {
+  const params = req.params.id
+  const hotel = await HotelQuotation.findByPk(params)
+
+  res.status(200).json({
+    success: true,
+    hotel
+  })
+})
+
+// get excursionQuotationData => /api/quotation/excursion/data/:id
+exports.getExcursionQuotationData = catchAsyncErrors(async(req,res,next) => {
+  const params = req.params.id
+  const excursion = await ExcursionQuotation.findByPk(params)
+
+  res.status(200).json({
+    success: true,
+    excursion
   })
 })
