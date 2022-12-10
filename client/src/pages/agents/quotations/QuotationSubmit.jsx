@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { clearExcursionData } from '../../../redux/slices/excursionSlice' 
 import { clearHotelData } from '../../../redux/slices/hotelSlice' 
 import { clearTransferData } from '../../../redux/slices/transferSlice' 
+import { Link, useNavigate } from 'react-router-dom'
 
 
 
 function QuotationSubmit() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const { transferEnquiry } = useSelector( state => state.transfer )
   const { hotelData, filteredData, price } = useSelector( state => state.hotel )
@@ -50,8 +52,8 @@ const prepareQuotation = async() => {
       transferData,
       hoteldata,
       excursionData
-    }, config )
-    console.log(quotation.data);
+    }, config ) 
+    navigate('/quotation')
   } catch (error) {
     console.log(error);
   }
@@ -59,16 +61,16 @@ const prepareQuotation = async() => {
   return (
     <div className="max-w-screen-2xl mx-auto mb-10">
       <div className="mt-7  border-2  shadow-md py-7 px-5 flex justify-center items-center">
-        {/* <Link to='/quotation'> */}
+        <Link to='/quotation'>
         <button className='bg-darkColor text-white px-10 py-2 shadow-md' 
         onClick={async () => {
-          await prepareQuotation()
+          // await prepareQuotation()
           dispatch(clearExcursionData())
           dispatch(clearHotelData())
           dispatch(clearTransferData())
         }}
         >Prepare Quotation</button>
-        {/* </Link> */}
+        </Link>
       </div>
     </div>
   )

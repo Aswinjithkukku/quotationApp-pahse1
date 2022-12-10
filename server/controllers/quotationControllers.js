@@ -13,14 +13,58 @@ exports.prepareQuotation = catchAsyncErrors(async (req, res, next) => {
 
   const quotationNumber = 1000 + quotationfind.length;
 
-  // create quotation
+  const {
+    transferfrom,
+    transferTo,
+    transferStatus,
+    returnStatus,
+    people,
+    totalamount,
+    amountPerPerson,
+  } = req.body.transferData;
+  const {
+    hotelName,
+    place,
+    hotelpeople,
+    roomType,
+    nights,
+    hoteltotalamount,
+    hotelamountPerPerson,
+  } = req.body.hoteldata;
 
-  const quotation = await Quotations.create({
-    quotationNumber,
-    amendmentNumber: 0000,
-    QuotationAmendmentId: null,
-    UserId: req.user.id,
-  });
+  const { excursionPeople, excursions } = req.body.excursionData;
+
+  // create quotation
+  let quotation;
+
+  if (
+    excursionPeople && excursions ||
+    transferfrom &&
+      transferTo &&
+      transferStatus &&
+      people &&
+      totalamount &&
+      amountPerPerson ||
+    hotelName &&
+      place &&
+      hotelpeople &&
+      roomType &&
+      nights &&
+      hoteltotalamount &&
+      hotelamountPerPerson
+  ) {
+    quotation = await Quotations.create({
+      quotationNumber,
+      amendmentNumber: 0000,
+      QuotationAmendmentId: null,
+      UserId: req.user.id,
+    });
+  } else {
+    return res.status(400).json({
+      success: false,
+      message: "No essential data provided"
+    })
+  }
 
   // create quotation amendments
   const amendment = await QuotationAmendments.findAll({
@@ -39,15 +83,7 @@ exports.prepareQuotation = catchAsyncErrors(async (req, res, next) => {
   });
 
   // create transfer quotation
-  const {
-    transferfrom,
-    transferTo,
-    transferStatus,
-    returnStatus,
-    people,
-    totalamount,
-    amountPerPerson,
-  } = req.body.transferData;
+
   let transferQuotation;
   if (
     transferfrom &&
@@ -71,15 +107,6 @@ exports.prepareQuotation = catchAsyncErrors(async (req, res, next) => {
     });
   }
   // create hotel quotation
-  const {
-    hotelName,
-    place,
-    hotelpeople,
-    roomType,
-    nights,
-    hoteltotalamount,
-    hotelamountPerPerson,
-  } = req.body.hoteldata;
 
   let hotelQuotation;
 
@@ -106,8 +133,6 @@ exports.prepareQuotation = catchAsyncErrors(async (req, res, next) => {
     });
   }
   // create excursion quotation
-
-  const { excursionPeople, excursions } = req.body.excursionData;
 
   let excursionQuotation;
 
@@ -223,13 +248,12 @@ exports.updateQuotation = catchAsyncErrors(async (req, res, next) => {
   const amendment = await QuotationAmendments.findOne({
     where: { QuotationId: quotation.id },
   });
-  
-  const amendmentNumber = Number(amendment.amendmentNumber) + 1 ;
 
+  const amendmentNumber = Number(amendment.amendmentNumber) + 1;
 
   const quotationAmendment = await QuotationAmendments.create({
     quotationNumber: quotation.quotationNumber,
-    amendmentNumber:  amendmentNumber,
+    amendmentNumber: amendmentNumber,
     TransferQuotationId: null,
     HotelQuotationId: null,
     ExcursionQuotationId: null,
@@ -274,7 +298,7 @@ exports.updateQuotation = catchAsyncErrors(async (req, res, next) => {
       QuotationAmendmentId: quotationAmendment.id,
       UserId: req.user.id,
     });
-  } 
+  }
 
   // create hotel quotation
   const {
@@ -310,7 +334,7 @@ exports.updateQuotation = catchAsyncErrors(async (req, res, next) => {
       QuotationAmendmentId: quotationAmendment.id,
       UserId: req.user.id,
     });
-  } 
+  }
   // create excursion quotation
 
   const { excursionPeople, excursions } = req.body.excursionData;
@@ -337,15 +361,23 @@ exports.updateQuotation = catchAsyncErrors(async (req, res, next) => {
       UserId: require.user.id,
     });
   }
-  const number = amendmentNumber - 1
-  const recentAmendment = await QuotationAmendments.findOne({ where: { amendmentNumber: number } })
+  const number = amendmentNumber - 1;
+  const recentAmendment = await QuotationAmendments.findOne({
+    where: { amendmentNumber: number },
+  });
 
   // update quotation amendments
   const updateQuotationAmendment = await QuotationAmendments.update(
     {
-      transferQuotationId: transferQuotation?.id ? transferQuotation?.id : recentAmendment?.transferQuotationId,
-      hotelQuotationId: hotelQuotation?.id ? hotelQuotation?.id : recentAmendment?.hotelQuotationId,
-      excursionQuotationId: excursionQuotation?.id ? excursionQuotation?.id : recentAmendment?.excursionQuotationId,
+      transferQuotationId: transferQuotation?.id
+        ? transferQuotation?.id
+        : recentAmendment?.transferQuotationId,
+      hotelQuotationId: hotelQuotation?.id
+        ? hotelQuotation?.id
+        : recentAmendment?.hotelQuotationId,
+      excursionQuotationId: excursionQuotation?.id
+        ? excursionQuotation?.id
+        : recentAmendment?.excursionQuotationId,
     },
     { where: { id: quotationAmendment.id } }
   );

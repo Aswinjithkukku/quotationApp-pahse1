@@ -13,8 +13,14 @@ function TransferList() {
 
   const datafetch = async () => {
     try {
+      const token = localStorage.getItem('token')
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      }
       const { data } = await axios.get(
-        "/transfer/all"
+        "/transfer/all", config
       );
       setTransfers(data.transfers);
       console.log(transfers);
